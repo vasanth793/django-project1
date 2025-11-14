@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+</head>
+<body>
+    {% include 'navbar.html'%}
+
+    {% block content %}
+
+    {% endblock %}
+    <!-- Hero Section -->
+<div class="hero">
+    <h1 class="display-4 fw-bold">About Us</h1>
+</div>
+    <!-- About Content -->
+<div class="container my-5">
+
+    <h2 class="section-title text-center mb-4">Who We Are</h2>
+
+    <p class="lead text-center mb-5 px-4">
+        We are a new-age men's fashion brand built for the <strong>2025 generation</strong> — 
+        the boys and men who want to look bold, effortless, and confidently stylish.
+        Fashion is not just clothing; it’s a vibe, a mindset, a lifestyle.
+    </p>
+
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <img src="https://starsdesigngroup.com/wp-content/uploads/2025/02/White-Aesthetic-Modern-Fashion-News-Email-Header.png" class="img-fluid rounded shadow">
+        </div>
+        <div class="col-md-6">
+            <h3 class="fw-bold mb-3">Fashion for the Modern Generation</h3>
+            <p>
+                2025 style is all about <strong>baggy fits, oversized comfort, clean aesthetics, 
+                luxury minimalism,</strong> and a vibe that speaks confidence without trying hard.
+            </p>
+            <p>
+                Our collection is crafted for today’s trendsetters — 
+                from <strong>trendy baggy pants</strong> to <strong>oversize shirts</strong>, 
+                <strong>mom-fit jeans</strong>, street-style <strong>hoodies</strong>, 
+                and premium <strong>combo sets</strong>.
+            </p>
+        </div>
+    </div>
+
+    <h2 class="section-title text-center mb-4">Our Vibe</h2>
+
+    <p class="text-center mb-5 px-4">
+        We believe in creating a brand that matches the energy of today's youth:
+    </p>
+
+    <div class="row text-center mb-5">
+        <div class="col-md-4 mb-4">
+            <h4 class="fw-bold">🔥 Trendy</h4>
+            <p>Styles inspired by global 2025 fashion — always fresh, always hype.</p>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <h4 class="fw-bold">⚡ Bold</h4>
+            <p>Clothing that boosts your personality without you saying a word.</p>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <h4 class="fw-bold">🎯 Perfect Fit</h4>
+            <p>Streetwear vibes, comfort focused, and absolutely confidence boosting.</p>
+        </div>
+    </div>
+
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h3 class="fw-bold mb-3">Why Choose Us?</h3>
+            <ul>
+                <li>Premium quality fabrics</li>
+                <li>Trendy 2025 fashion styles</li>
+                <li>Budget-friendly prices</li>
+                <li>Fresh drops every month</li>
+                <li>Perfect for boys & men aged 15–30</li>
+                <li>Street Style | Korean Style | Minimal Style</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=900"
+                 class="img-fluid rounded shadow">
+        </div>
+    </div>
+    <!-- Footer -->
+<footer class="bg-dark text-light pt-4 mt-5">
+    <div class="container">
+        <div class="row text-center text-md-start">
+
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">🛍 Men's Fashion Store</h5>
+                <p>Trendy outfits for the 2025 generation.  
+                   Style that speaks without saying a word.</p>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">📞 Contact Us</h5>
+                <p class="mb-1">📍 Tamil Nadu, India</p>
+                <p class="mb-1">📧 support@mensfashion.com</p>
+                <p class="mb-1">📱 +91 98765 43210</p>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <h5 class="fw-bold">🌐 Follow Us</h5>
+                <p>
+                    <a href="#" class="text-light text-decoration-none d-block">Instagram</a>
+                    <a href="#" class="text-light text-decoration-none d-block">Facebook</a>
+                    <a href="#" class="text-light text-decoration-none d-block">Twitter</a>
+                </p>
+            </div>
+
+        </div>
+
+        <div class="text-center border-top border-light mt-3 py-3">
+            © 2025 Men’s Fashion Store · All Rights Reserved
+        </div>
+    </div>
+</footer>
+
+
+</div>
+</body>
+</html>
