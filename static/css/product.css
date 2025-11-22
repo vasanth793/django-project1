@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: 90px 1fr 450px;
+    gap: 40px;
+    padding: 40px 60px;
+}
+
+/* Thumbnails */
+.thumbnails img {
+    width: 70px;
+    height: 95px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.thumbnails img:hover {
+    opacity: .6;
+}
+
+/* Main image */
+.main-image img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Product info */
+.product-info h2 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.product-info h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 15px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn-add {
+    width: 100%;
+    padding: 12px;
+    background: #028A38;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-add:hover {
+    background: #016F2D;
+}
+
+/* Delivery */
+.delivery-box {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+/* Accordion */
+.accordion {
+    margin-top: 30px;
+}
+
+.acc-title {
+    font-size: 18px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}

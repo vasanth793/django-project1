@@ -10,10 +10,10 @@ urlpatterns = [
     path('about/',AboutPage),
     path('Products/',ProductsPage),
     path('cart/',CartPage),
+    # path('profile/',ProfilePage)
+    path('profile/', views.profile_page, name="profile_page"),
+    path('product/<int:product_id>/', views.product_detail, name='product_detail'),
+    
 
-    path('login/', views.login_user, name='login'),
-    path('signup/', views.signup_user, name='signup'),
-    path('logout/', views.logout_user, name='logout'),
-    path('profile/', views.profile_page, name='profile'),
 
 ]

@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ product.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+     {% load django_bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+    {% include 'navbar.html'%}
+
+    {% block content %}
+
+    {% endblock %}
+
+    <div class="product-container">
+
+        <!-- ========== LEFT THUMBNAILS ========== -->
+        <div class="thumbnails">
+            {% for img in images %}
+            <img src="{{ img.image.url }}" onclick="changeImage(this)">
+            {% endfor %}
+        </div>
+
+        <!-- ========== MAIN IMAGE (FIRST IMAGE BY DEFAULT) ========== -->
+        <div class="main-image">
+            <img id="preview" src="{{ images.0.image.url }}">
+        </div>
+
+        <!-- ========== PRODUCT INFO ========== -->
+        <div class="product-info">
+
+            <h2>{{ product.name }}</h2>
+            <h3>₹ {{ product.price }}</h3>
+
+            <p><strong>COLOUR:</strong> {{ product.color }}</p>
+
+            <!-- SIZE BOX -->
+            <label><strong>Size:</strong></label>
+            <select>
+                <option>Please select</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+            </select>
+
+            <!-- ADD TO BAG -->
+            <a href="{% url 'add_to_cart' product.id %}">
+                <button class="btn-add">ADD TO BAG</button>
+            </a>
+
+            <!-- DELIVERY -->
+            <div class="delivery-box">
+                <i class="bi bi-truck"></i>
+                <p>Free delivery on qualifying orders.</p>
+                <a href="#">View Delivery & Returns</a>
+            </div>
+
+            <!-- DETAILS -->
+            <div class="accordion">
+                <p class="acc-title">Product Details <span>+</span></p>
+                <p>{{ product.details }}</p>
+
+                <p class="acc-title">Brand <span>+</span></p>
+                <p>{{ product.brand }}</p>
+
+                <p class="acc-title">Size & Fit <span>+</span></p>
+                <p>{{ product.size_fit }}</p>
+
+                <p class="acc-title">Look After Me <span>+</span></p>
+                <p>{{ product.look_after_me }}</p>
+
+                <p class="acc-title">About Me <span>+</span></p>
+                <p>{{ product.about_me }}</p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+        function changeImage(img) {
+            document.getElementById("preview").src = img.src;
+        }
+    </script>
+
+</body>
+
+</html>

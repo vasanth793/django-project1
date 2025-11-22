@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Product
+
+
 
 
 
@@ -39,81 +41,43 @@ def CartPage(request):
 
     return render(request,'cart.html')
 
+def ProfilePage(request):
 
-# Signup / Register
-def signup_user(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        confirm = request.POST.get('confirm')
-
-        if password != confirm:
-            messages.error(request, "Passwords do not match")
-            return redirect('signup')
-
-        if User.objects.filter(username=username).exists():
-            messages.error(request, "Username already exists")
-            return redirect('signup')
-
-        user = User.objects.create_user(username=username, email=email, password=password)
-        user.save()
-        messages.success(request, "Account created successfully. Login now!")
-        return redirect('login')
-
-    return render(request, 'signup.html')
+    return render(request,'profile.html')
 
 
-# Login
-def login_user(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
 
-        user = authenticate(request, username=username, password=password)
+def product_detail(request, product_id):
+    product = Product.objects.get(id=product_id)
 
-        if user is not None:
-            login(request, user)
-            messages.success(request, "Logged in successfully")
-            return redirect('profile')
-        else:
-            messages.error(request, "Invalid username or password")
-            return redirect('login')
+    # Load session list
+    viewed = request.session.get("recently_viewed", [])
 
-    return render(request, 'login.html')
+    # If product already exists, remove it
+    if product_id in viewed:
+        viewed.remove(product_id)
 
+    # Add product at front (latest first)
+    viewed.insert(0, product_id)
 
-# Logout
-def logout_user(request):
-    logout(request)
-    messages.success(request, "Logged out successfully")
-    return redirect('login')
+    # Keep only last 10 items
+    viewed = viewed[:10]
 
+    # Save back to session
+    request.session["recently_viewed"] = viewed
 
-# Profile (Protected)
-from django.contrib.auth.decorators import login_required
+    return render(request, "home/product_detail.html", {
+        "product": product
+    })
 
-@login_required(login_url='/login/')
+from home.models import Product
+
 def profile_page(request):
-    return render(request, 'profile.html')
+    # Get viewed IDs
+    viewed_ids = request.session.get("recently_viewed", [])
 
+    recent_products = Product.objects.filter(id__in=viewed_ids)
 
-# # Show all products
-# def home_page(request):
-#     products = Product.objects.all()
-#     return render(request, "home/home.html", {"products": products})
-
-# # Add to cart
-# def add_to_cart_view(request, product_id):
-#     add_to_cart(request, product_id)
-#     return redirect("cart_page")
-
-# # Show cart items
-# def cart_page(request):
-#     items, total = cart_items(request)
-#     return render(request, "home/cart.html", {"items": items, "total": total})
-
-# # Remove specific item
-# def remove_cart_view(request, product_id):
-#     remove_item(request, product_id)
-#     return redirect("cart_page")
+    return render(request, "profile.html", {
+        "recent_products": recent_products,
+    })
