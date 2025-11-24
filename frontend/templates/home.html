@@ -4,299 +4,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>MENSWEAR</title>
+
     {% load static %}
     {% load django_bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+    <!-- Navbar Styles -->
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+
+        /* ================= NAVBAR ================= */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo { font-size: 24px; font-weight: bold; color: #e63946; text-decoration: none; display: flex; align-items: center; }
+        .logo i { margin-right: 8px; }
+
+        .nav-menu { display: flex; list-style: none; gap: 30px; }
+        .nav-menu li a {
+            text-decoration: none; color: #333; font-weight: 500;
+            transition: 0.3s; padding-bottom: 3px;
+        }
+
+        .nav-menu li a:hover { color: #e63946; }
+
+        /* Active */
+        .active-link {
+            color: #e63946;
+            border-bottom: 2px solid #e63946;
+        }
+
+        .search-container { position: relative; width: 300px; }
+        .search-input {
+            width: 100%; padding: 10px 40px 10px 15px;
+            border: 1px solid #ddd; border-radius: 4px; outline: none;
+        }
+        .search-btn {
+            position: absolute; right: 5px; top: 50%;
+            transform: translateY(-50%);
+            background: none; border: none; color: #777; cursor: pointer;
+        }
+
+        .nav-icons { display: flex; gap: 20px; }
+        .nav-icons a { text-decoration: none; color: #333; text-align: center; font-size: 14px; transition: 0.3s; }
+        .nav-icons a:hover { color: #e63946; }
+        .icon-container { position: relative; }
+        .icon-container i { font-size: 20px; }
+
+        .badge {
+            position: absolute; top: -8px; right: -8px;
+            background-color: #e63946; color: white;
+            border-radius: 50%; width: 18px; height: 18px;
+            font-size: 11px; display: flex; justify-content: center; align-items: center;
+        }
+
+        .hamburger { display: none; flex-direction: column; cursor: pointer; }
+        .hamburger span {
+            width: 25px; height: 3px; background: #333;
+            margin: 4px 0; transition: 0.3s;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed; left: -100%; top: 70px;
+                flex-direction: column; width: 100%; background: #fff;
+                text-align: center; padding: 20px 0;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.1);
+                transition: 0.3s;
+            }
+            .nav-menu.active { left: 0; }
+            .search-container { display: none; }
+            .hamburger { display: flex; }
+        }
+
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* ================= HERO ================= */
+        .hero {
+            background: url("https://images.pexels.com/photos/6626361/pexels-photo-6626361.jpeg") center/cover;
+            height: 480px; position: relative;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white;
+        }
+        .hero-overlay {
+            position: absolute; inset: 0; background: rgba(0, 0, 0, 0.50);
+        }
+        .hero-content { position: relative; z-index: 10; }
+        .hero h1 { font-size: 44px; font-weight: 700; }
+        .hero p { font-size: 18px; margin-bottom: 20px; }
+
+        .category-card img { height: 160px; object-fit: cover; }
+        .product-card img { height: 260px; object-fit: cover; }
+
+        footer { background: black; color: white; padding: 20px 0; }
+    </style>
 </head>
 
 
 <body>
-    {% include 'navbar.html'%}
 
-    {% block content %}
+    <!-- =================== NEW NAVBAR =================== -->
+    <nav class="navbar">
+        <a href="/" class="logo"><i class="fas fa-tshirt"></i> MENSWEAR</a>
 
-    {% endblock %}
+        <ul class="nav-menu">
+            <li><a href="/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a></li>
+            <li><a href="/Products/" class="{% if '/products' in request.path %}active-link{% endif %}">Products</a></li>
+            <li><a href="/about/" class="{% if request.path == '/about/' %}active-link{% endif %}">About</a></li>
+            <!-- <li><a href="/brands/" class="{% if request.path == '/brands/' %}active-link{% endif %}">Brands</a></li> -->
+        </ul>
 
-    <div class="container-fluid p-0">
-
-
-        <!-- ================= HERO SECTION ================= -->
-        <section class="hero">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h1>Discover Your Style</h1>
-                <p>Exclusive men's fashion that defines sophistication.
-                    Perfect outfits for the 2025 generation.</p>
-                <a href="/Products/" class="btn btn-light px-4 py-2 fw-bold">Shop Now</a>
-            </div>
-        </section>
-
-        <!-- ================= FEATURES SECTION ================= -->
-        <div class="container text-center my-5">
-            <div class="row g-4">
-
-                <div class="col-md-3">
-                    <i class="bi bi-truck fs-1"></i>
-                    <h5 class="mt-2">Free Shipping</h5>
-                    <p class="text-muted">On all orders above ₹999</p>
-                </div>
-
-                <div class="col-md-3">
-                    <i class="bi bi-shield-lock fs-1"></i>
-                    <h5 class="mt-2">Secure Payment</h5>
-                    <p class="text-muted">100% secure transactions</p>
-                </div>
-
-                <div class="col-md-3">
-                    <i class="bi bi-star fs-1"></i>
-                    <h5 class="mt-2">Premium Quality</h5>
-                    <p class="text-muted">Top-grade fashion wear</p>
-                </div>
-
-                <div class="col-md-3">
-                    <i class="bi bi-lightning-charge fs-1"></i>
-                    <h5 class="mt-2">Latest Trends</h5>
-                    <p class="text-muted">2025 men’s fashion</p>
-                </div>
-
-            </div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Search...">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
         </div>
 
-        <!-- ================= CATEGORY SECTION ================= -->
-        <div class="container my-5">
-            <h3 class="text-center mb-4">Shop by Category</h3>
-
-            <div class="row g-4 text-center">
-
-                <div class="col-md-3">
-                    <div class="card category-card shadow-sm">
-                        <img src="https://images.pexels.com/photos/34769612/pexels-photo-34769612.jpeg"
-                            class="card-img-top">
-                        <div class="card-body">
-                            <h5>Baggy & Oversize Wear</h5>
-                        </div>
-                        
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card category-card shadow-sm">
-                        <!-- <img src="{% static 'assets/IMG_5211.jpg' %}" alt="image"> -->
-                        <img src="https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg"
-                            class="card-img-top">
-                        <div class="card-body">
-                            <h5>Casual Wear</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card category-card shadow-sm">
-                        <img src="https://images.pexels.com/photos/5192248/pexels-photo-5192248.jpeg"
-                            class="card-img-top">
-                        <div class="card-body">
-                            <h5>Jeans Collection</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card category-card shadow-sm">
-                        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800"
-                            class="card-img-top">
-                        <div class="card-body">
-                            <h5>Accessories</h5>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="nav-icons">
+            <a href="/login/signup/"><div class="icon-container"><i class="fas fa-user"></i></div><span>Profile</span></a>
+            <!-- <a href="/wishlist/"><div class="icon-container"><i class="fas fa-heart"></i></div><span>Wishlist</span></a> -->
+            <a href="/cart/"><div class="icon-container"><i class="fas fa-shopping-bag"></i><span class="badge">2</span></div><span>Bag</span></a>
         </div>
 
-        <!-- ================= FEATURED PRODUCTS ================= -->
-        <div class="container my-5">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3>Featured Products</h3>
-                <a href="/Products/" class="btn btn-outline-dark btn-sm">View All</a>
-            </div>
-
-            <div class="row g-4">
-
-                <!-- Product 1 -->
-                <div class="col-md-3">
-                    <div class="card product-card shadow-sm">
-                        <img src="{% static 'assets/img1.png' %}" alt="image"
-                            class="card-img-top">
-                        <span class="badge bg-success position-absolute m-2">Trending</span>
-                        <div class="card-body">
-                            <h5 class="card-title">Premium Leather Jacket</h5>
-                            <p>₹2,199</p>
-                            <a href="/view/product/1/" class="btn btn-dark w-100">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="col-md-3">
-                    <div class="card product-card shadow-sm">
-                         <img src="{% static 'assets/img2.png' %}" alt="image"
-                            class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">Classic Formal Suit</h5>
-                            <p>₹1,499</p>
-                            <a href="/view/product/2/" class="btn btn-dark w-100">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="col-md-3">
-                    <div class="card product-card shadow-sm">
-                        <img src="https://images.pexels.com/photos/7764066/pexels-photo-7764066.jpeg"
-                            class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">Casual Cotton Shirt</h5>
-                            <p>₹1,099</p>
-                            <a href="/view/product/3/" class="btn btn-dark w-100">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="col-md-3">
-                    <div class="card product-card shadow-sm">
-                         <img src="{% static 'assets/img3.png' %}"
-                            class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title">Designer Sneakers</h5>
-                            <p>₹1,799</p>
-                            <a href="/view/product/4/" class="btn btn-dark w-100">Add to Cart</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+        <div class="hamburger">
+            <span></span><span></span><span></span>
         </div>
+    </nav>
 
 
-        <!-- Products Section -->
-        <div class="container my-5">
-            <h2 class="text-center mb-4">New Arrivals</h2>
+    {% block content %}{% endblock %}
 
-            <div class="row g-4">
 
-                <!-- Product 1 -->
-                <div class="col-md-4">
-                    <div class="card product-card">
-                        <img src="https://images.pexels.com/photos/17035519/pexels-photo-17035519.png"
-                            class="card-img-top" alt="Shirt">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Men's Classic Shirt</h5>
-                            <p class="card-text">₹799</p>
-                            <a href="/home/cart/" class="btn btn-dark">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Product 2 -->
-                <div class="col-md-4">
-                    <div class="card product-card">
-                        <img src="https://images.pexels.com/photos/6109827/pexels-photo-6109827.jpeg"
-                            class="card-img-top" alt="Jeans">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Denim Jeans</h5>
-                            <p class="card-text">₹1199</p>
-                            <a href="#" class="btn btn-dark">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="col-md-4">
-                    <div class="card product-card">
-                        <img src="https://images.pexels.com/photos/15369352/pexels-photo-15369352.jpeg"
-                            class="card-img-top" alt="T-shirt">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Printed T-Shirt</h5>
-                            <p class="card-text">₹599</p>
-                            <a href="#" class="btn btn-dark">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Discover Your Style</h1>
+            <p>Exclusive men's fashion. Perfect for the 2025 generation.</p>
+            <a href="/Products/" class="btn btn-light px-4 py-2 fw-bold">Shop Now</a>
         </div>
-        <div class="container my-5">
-            <div class="row g-4">
+    </section>
 
-                <!-- 1 - Trendy Baggy Pants -->
-                <div class="col-md-3">
-                    <div class="card product-card">
-                        <img src="https://images.pexels.com/photos/33055598/pexels-photo-33055598.jpeg"
-                            class="card-img-top" alt="Baggy Pants">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Trendy Baggy Pants</h5>
-                            <p class="card-text">₹999</p>
-                            <a href="#" class="btn btn-dark">View</a>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- 2 - Mom Fit Jeans -->
-                <div class="col-md-3">
-                    <div class="card product-card">
-                        <img src="https://images.pexels.com/photos/3822943/pexels-photo-3822943.png"
-                            class="card-img-top" alt="Mom Fit Jeans">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Mom Fit Jeans</h5>
-                            <p class="card-text">₹1299</p>
-                            <a href="#" class="btn btn-dark">View</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3 - Baggy Shirt -->
-                <div class="col-md-3">
-                    <div class="card product-card">
-                        <img src="https://images.pexels.com/photos/28865419/pexels-photo-28865419.jpeg"
-                            class="card-img-top" alt="Baggy Shirt">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Baggy Shirt</h5>
-                            <p class="card-text">₹799</p>
-                            <a href="#" class="btn btn-dark">View</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4 - Oversized Hoodie -->
-                <div class="col-md-3">
-                    <div class="card product-card">
-                        <img src="https://images.pexels.com/photos/4065842/pexels-photo-4065842.jpeg"
-                            class="card-img-top" alt="Hoodie">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Oversized Hoodie</h5>
-                            <p class="card-text">₹1499</p>
-                            <a href="#" class="btn btn-dark">View</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <!-- ================= FEATURES ================= -->
+    <div class="container text-center my-5">
+        <div class="row g-4">
+            <div class="col-md-3"><i class="bi bi-truck fs-1"></i><h5 class="mt-2">Free Shipping</h5><p class="text-muted">Above ₹999</p></div>
+            <div class="col-md-3"><i class="bi bi-shield-lock fs-1"></i><h5 class="mt-2">Secure Payment</h5><p class="text-muted">100% Safe</p></div>
+            <div class="col-md-3"><i class="bi bi-star fs-1"></i><h5 class="mt-2">Premium Quality</h5><p class="text-muted">Top-grade fashion</p></div>
+            <div class="col-md-3"><i class="bi bi-lightning-charge fs-1"></i><h5 class="mt-2">Latest Trends</h5><p class="text-muted">2025 collection</p></div>
         </div>
-
-
-
-
-
-        <!-- Footer -->
-        <footer class="bg-dark text-light text-center py-3">
-            <p class="mb-0">© 2025 Men’s Fashion Store · All Rights Reserved</p>
-        </footer>
     </div>
 
-</body>
 
+    <!-- ================= CATEGORY ================= -->
+    <div class="container my-5">
+        <h3 class="text-center mb-4">Shop by Category</h3>
+
+        <div class="row g-4 text-center">
+
+            <div class="col-md-3">
+                <div class="card category-card shadow-sm">
+                    <img src="https://images.pexels.com/photos/34769612/pexels-photo-34769612.jpeg" class="card-img-top">
+                    <div class="card-body"><h5>Baggy & Oversize</h5></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card category-card shadow-sm">
+                    <img src="https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg" class="card-img-top">
+                    <div class="card-body"><h5>Casual Wear</h5></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card category-card shadow-sm">
+                    <img src="https://images.pexels.com/photos/5192248/pexels-photo-5192248.jpeg" class="card-img-top">
+                    <div class="card-body"><h5>Jeans Collection</h5></div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card category-card shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800" class="card-img-top">
+                    <div class="card-body"><h5>Accessories</h5></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ================= FEATURED PRODUCTS ================= -->
+    <div class="container my-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Featured Products</h3>
+            <a href="/Products/" class="btn btn-outline-dark btn-sm">View All</a>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+                <div class="card product-card shadow-sm">
+                    <img src="{% static 'assets/img1.png' %}" class="card-img-top">
+                    <span class="badge bg-success position-absolute m-2">Trending</span>
+                    <div class="card-body">
+                        <h5>Premium Leather Jacket</h5>
+                        <p>₹2,199</p>
+                        <a href="/view/product/1/" class="btn btn-dark w-100">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card product-card shadow-sm">
+                    <img src="{% static 'assets/img2.png' %}" class="card-img-top">
+                    <div class="card-body">
+                        <h5>Classic Formal Suit</h5>
+                        <p>₹1,499</p>
+                        <a href="/view/product/2/" class="btn btn-dark w-100">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card product-card shadow-sm">
+                    <img src="https://images.pexels.com/photos/7764066/pexels-photo-7764066.jpeg" class="card-img-top">
+                    <div class="card-body">
+                        <h5>Casual Cotton Shirt</h5>
+                        <p>₹1,099</p>
+                        <a href="/view/product/3/" class="btn btn-dark w-100">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card product-card shadow-sm">
+                    <img src="{% static 'assets/img3.png' %}" class="card-img-top">
+                    <div class="card-body">
+                        <h5>Designer Sneakers</h5>
+                        <p>₹1,799</p>
+                        <a href="/view/product/4/" class="btn btn-dark w-100">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="text-center bg-dark text-light py-3">
+        <p class="mb-0">© 2025 Men’s Fashion Store · All Rights Reserved</p>
+    </footer>
+
+
+    <!-- Navbar JS -->
+    <script>
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+        });
+
+        document.querySelectorAll(".nav-menu li a").forEach(link => {
+            link.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                navMenu.classList.remove("active");
+            });
+        });
+    </script>
+
+</body>
 </html>

@@ -39,3 +39,22 @@ def LogoutPage(request):
 
     return redirect('/login/login/')
 
+
+def SignupPage(request):
+
+    if request.method == "POST":
+
+        new_user = User(username= request.POST['username'], first_name = request.POST['first_name'] , last_name = request.POST['last_name'],
+                    email = request.POST['email_address'], age = request.POST['age'])
+        
+        new_user.set_password(request.POST['password'])
+        
+        new_user.save()
+
+        return redirect('/login/login/')
+
+
+    
+
+
+    return render(request, 'signup.html')

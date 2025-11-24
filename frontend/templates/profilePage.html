@@ -1,70 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile - Dress Store</title>
-    {% load django_bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
+    <title>Profile Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .scroll-products {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
             display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 10px;
+            min-height: 100vh;
         }
 
-        .scroll-products::-webkit-scrollbar {
-            height: 6px;
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
         }
 
-        .scroll-products::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 5px;
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
         }
 
-        .product-card {
-            min-width: 180px;
+        .logo h2 {
+            color: #4a4a4a;
+            font-size: 24px;
         }
 
-        .product-card img {
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .nav-link:hover {
+            background-color: #f5f5f5;
+            color: #e53935;
+        }
+
+        .nav-link.active {
+            background-color: #f5f5f5;
+            color: #e53935;
+            border-left: 3px solid #e53935;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .content-header {
+            margin-bottom: 30px;
+        }
+
+        .content-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .content-header p {
+            color: #777;
+        }
+
+        /* Profile Card Styles */
+        .profile-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            max-width: 800px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title {
+            font-size: 22px;
+            color: #333;
+        }
+
+        .edit-btn, .save-btn, .cancel-btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .edit-btn {
+            background-color: #e53935;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .save-btn {
+            background-color: #43a047;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .save-btn:hover {
+            background-color: #388e3c;
+        }
+
+        .cancel-btn {
+            background-color: #e0e0e0;
+            color: #333;
+        }
+
+        .cancel-btn:hover {
+            background-color: #bdbdbd;
+        }
+
+        /* Profile Form Styles */
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .form-control {
             width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 5px;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #e53935;
+            outline: none;
+        }
+
+        .form-control:disabled {
+            background-color: #f9f9f9;
+            color: #555;
+            cursor: not-allowed;
+        }
+
+        .empty-value {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #43a047;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 4px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 10px 0;
+            }
+
+            .nav-menu {
+                display: flex;
+                overflow-x: auto;
+            }
+
+            .nav-item {
+                margin: 0 5px;
+            }
+
+            .profile-form {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-
 <body>
-    
-
     {% include 'navbar.html' %}
 
-    <div class="container my-5">
+    {% block content %}{% endblock %}
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>My Account</h2>
+            </div>
+            <!-- <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="overview">
+                        <i class="fas fa-home"></i>
+                        <span>Overview</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="orders">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders & Returns</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="addresses">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Addresses</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="wallet">
+                        <i class="fas fa-wallet"></i>
+                        <span>Wallet</span>
+                    </a>
+                </li> -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-page="profile">
+                        <i class="fas fa-user"></i>
+                        <span>Profile Details</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
 
-        <h2 class="mb-4">👤 My Profile</h2>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1>Profile Details</h1>
+                <p>Manage your personal information and account details</p>
+            </div>
 
-        <div class="card shadow-sm p-4 mb-5">
-            <h4>User Information</h4>
-            <hr>
-            <p><strong>Username:</strong> {{ request.user.username }}</p>
-            <!-- <p><strong>Email:</strong> {{ request.user.email }}</p> -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <h2 class="card-title">Personal Information</h2>
+                    <div id="buttonContainer">
+                        <button id="editBtn" class="edit-btn">EDIT</button>
+                        <div id="saveCancelContainer" style="display: none;">
+                            <button id="saveBtn" class="save-btn">SAVE</button>
+                            <button id="cancelBtn" class="cancel-btn">CANCEL</button>
+                        </div>
+                    </div>
+                </div>
 
-            <a href="/login/logout/" class="btn btn-danger mt-3">
-                <i class="bi bi-box-arrow-right"></i> Logout
-            </a>
-        </div>
+                <form id="profileForm" class="profile-form">
+                    <div class="form-group">
+                        <label class="form-label" for="fullName">Full Name</label>
+                        <input type="text" id="fullName" class="form-control" value="Vasanth" disabled>
+                    </div>
 
-    
-   
+                    <div class="form-group">
+                        <label class="form-label" for="mobileNumber">Mobile Number</label>
+                        <input type="tel" id="mobileNumber" class="form-control" value="8124062610" disabled>
+                    </div>
 
+                    <div class="form-group">
+                        <label class="form-label" for="emailId">Email ID</label>
+                        <input type="email" id="emailId" class="form-control" value="- not added -" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="gender">Gender</label>
+                        <select id="gender" class="form-control" disabled>
+                            <option value="">- not added -</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="dateOfBirth">Date of Birth</label>
+                        <input type="date" id="dateOfBirth" class="form-control" value="" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="location">Location</label>
+                        <input type="text" id="location" class="form-control" value="- not added -" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="alternateMobile">Alternate Mobile</label>
+                        <input type="tel" id="alternateMobile" class="form-control" value="- not added -" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="hintName">Hint Name</label>
+                        <input type="text" id="hintName" class="form-control" value="- not added -" disabled>
+                    </div>
+                </form>
+            </div>
+        </main>
     </div>
 
-</body>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Profile updated successfully!</div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editBtn = document.getElementById('editBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const saveCancelContainer = document.getElementById('saveCancelContainer');
+            const profileForm = document.getElementById('profileForm');
+            const toast = document.getElementById('toast');
+            const formInputs = profileForm.querySelectorAll('.form-control');
+            
+            // Store original values for cancel functionality
+            let originalValues = {};
+            
+            // Navigation menu handling
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Here you would typically load content based on the clicked link
+                    const page = this.getAttribute('data-page');
+                    console.log(`Navigating to: ${page}`);
+                    
+                    // For demonstration purposes, just showing a toast
+                    showToast(`Navigating to ${page.charAt(0).toUpperCase() + page.slice(1)} page`);
+                });
+            });
+            
+            // Edit button functionality
+            editBtn.addEventListener('click', function() {
+                // Store original values
+                formInputs.forEach(input => {
+                    originalValues[input.id] = input.value;
+                });
+                
+                // Enable form inputs
+                formInputs.forEach(input => {
+                    input.disabled = false;
+                    
+                    // Handle special case for empty values
+                    if (input.value === '- not added -') {
+                        input.value = '';
+                    }
+                });
+                
+                // Toggle buttons
+                editBtn.style.display = 'none';
+                saveCancelContainer.style.display = 'block';
+            });
+            
+            // Save button functionality
+            saveBtn.addEventListener('click', function() {
+                // Validate form
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // Save the data (in a real app, this would be sent to a server)
+                formInputs.forEach(input => {
+                    input.disabled = true;
+                    
+                    // Handle empty values
+                    if (input.value.trim() === '') {
+                        input.value = '- not added -';
+                    }
+                });
+                
+                // Toggle buttons
+                editBtn.style.display = 'block';
+                saveCancelContainer.style.display = 'none';
+                
+                // Show success message
+                showToast('Profile updated successfully!');
+            });
+            
+            // Cancel button functionality
+            cancelBtn.addEventListener('click', function() {
+                // Restore original values
+                formInputs.forEach(input => {
+                    input.value = originalValues[input.id];
+                    input.disabled = true;
+                });
+                
+                // Toggle buttons
+                editBtn.style.display = 'block';
+                saveCancelContainer.style.display = 'none';
+            });
+            
+            // Form validation
+            function validateForm() {
+                const fullName = document.getElementById('fullName').value.trim();
+                const mobileNumber = document.getElementById('mobileNumber').value.trim();
+                
+                if (fullName === '') {
+                    showToast('Please enter your full name', 'error');
+                    return false;
+                }
+                
+                if (mobileNumber !== '' && !/^\d{10}$/.test(mobileNumber)) {
+                    showToast('Please enter a valid 10-digit mobile number', 'error');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            // Toast notification function
+            function showToast(message, type = 'success') {
+                toast.textContent = message;
+                
+                if (type === 'error') {
+                    toast.style.backgroundColor = '#e53935';
+                } else {
+                    toast.style.backgroundColor = '#43a047';
+                }
+                
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
+            }
+        });
+    </script>
+</body>
 </html>
