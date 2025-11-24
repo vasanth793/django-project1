@@ -2,6 +2,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
 from .models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 def LoginPage(request):
 
@@ -53,8 +56,5 @@ def SignupPage(request):
 
         return redirect('/login/login/')
 
-
-    
-
-
     return render(request, 'signup.html')
+

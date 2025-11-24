@@ -146,3 +146,6 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_ROOT = BASE_DIR / 'media'
+# settings.py
+LOGIN_REDIRECT_URL = 'profile'  # Redirect after successful login
+LOGOUT_REDIRECT_URL = 'home'    # Redirect after logout
