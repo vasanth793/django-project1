@@ -1,9 +1,9 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
-from .models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from authentication.models import User        # ✔ CORRECT
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 def LoginPage(request):
@@ -47,14 +47,22 @@ def SignupPage(request):
 
     if request.method == "POST":
 
-        new_user = User(username= request.POST['username'], first_name = request.POST['first_name'] , last_name = request.POST['last_name'],
-                    email = request.POST['email_address'], age = request.POST['age'])
-        
-        new_user.set_password(request.POST['password'])
-        
-        new_user.save()
+        username = request.POST['username']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        email = request.POST['email_address']
+        password = request.POST['password']
+
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+        )
+
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save()
 
         return redirect('/login/login/')
 
     return render(request, 'signup.html')
-
