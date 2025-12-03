@@ -124,10 +124,10 @@
 
     <!-- =================== NEW NAVBAR =================== -->
     <nav class="navbar">
-        <a href="/" class="logo"><i class="fas fa-tshirt"></i> MENSWEAR</a>
+        <a href="/login/login/" class="logo"><i class="fas fa-tshirt"></i> MENSWEAR</a>
 
         <ul class="nav-menu">
-            <li><a href="/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a></li>
+            <li><a href="/login/login/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a></li>
             <li><a href="/Products/" class="{% if '/products' in request.path %}active-link{% endif %}">Products</a></li>
             <li><a href="/about/" class="{% if request.path == '/about/' %}active-link{% endif %}">About</a></li>
             <!-- <li><a href="/brands/" class="{% if request.path == '/brands/' %}active-link{% endif %}">Brands</a></li> -->
@@ -139,7 +139,7 @@
         </div>
 
         <div class="nav-icons">
-            <a href="/login/signup/"><div class="icon-container"><i class="fas fa-user"></i></div><span>Profile</span></a>
+            <a href="/login/profile/"><div class="icon-container"><i class="fas fa-user"></i></div><span>Profile</span></a>
             <!-- <a href="/wishlist/"><div class="icon-container"><i class="fas fa-heart"></i></div><span>Wishlist</span></a> -->
             <a href="/cart/"><div class="icon-container"><i class="fas fa-shopping-bag"></i><span class="badge">2</span></div><span>Bag</span></a>
         </div>
@@ -247,7 +247,7 @@
 
             <div class="col-md-3">
                 <div class="card product-card shadow-sm">
-                    <img src="https://images.pexels.com/photos/7764066/pexels-photo-7764066.jpeg" class="card-img-top">
+                    <img src="{% static 'assets/img4.png' %}" class="card-img-top">
                     <div class="card-body">
                         <h5>Casual Cotton Shirt</h5>
                         <p>₹1,099</p>
@@ -260,7 +260,7 @@
                 <div class="card product-card shadow-sm">
                     <img src="{% static 'assets/img3.png' %}" class="card-img-top">
                     <div class="card-body">
-                        <h5>Designer Sneakers</h5>
+                        <h5> Sneakers</h5>
                         <p>₹1,799</p>
                         <a href="/view/product/4/" class="btn btn-dark w-100">Add to Cart</a>
                     </div>

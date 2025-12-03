@@ -1,0 +1,152 @@
+{% load static %}
+
+<nav class="navbar">
+    <a href="/" class="logo"><i class="fas fa-tshirt"></i> MENSWEAR</a>
+
+    <!-- <ul class="nav-menu">
+        <li><a href="/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a></li>
+        <li><a href="/Products/" class="{% if '/products' in request.path %}active-link{% endif %}">Products</a></li>
+        <li><a href="/about/" class="{% if request.path == '/about/' %}active-link{% endif %}">About</a></li>
+         <li><a href="/sale/" class="{% if request.path == '/sale/' %}active-link{% endif %}">Sale</a></li> -->
+        <!-- <li><a href="/brands/" class="{% if request.path == '/brands/' %}active-link{% endif %}">Brands</a></li> -->
+    <!-- </ul>
+
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search...">
+        <button class="search-btn"><i class="fas fa-search"></i></button>
+    </div>
+
+    <div class="nav-icons">
+        <a href="/login/signup/">
+            <div class="icon-container">
+                <i class="fas fa-user"></i>
+            </div>
+            <span>Profile</span> -->
+        </a> -->
+<!-- 
+        <a href="/wishlist/">
+            <div class="icon-container">
+                <i class="fas fa-heart"></i>
+            </div>
+            <span>Wishlist</span>
+        </a> -->
+
+        <!-- <a href="/cart/">
+            <div class="icon-container">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="badge">2</span>
+            </div>
+            <span>Bag</span>
+        </a>
+    </div>
+
+    <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div> -->
+</nav>
+
+
+<!-- Navbar Styles -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 5%;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .logo { font-size: 24px; font-weight: bold; color: #e63946; text-decoration: none; display: flex; align-items: center; }
+    .logo i { margin-right: 8px; }
+
+    .nav-menu { display: flex; list-style: none; gap: 30px; }
+    .nav-menu li a {
+        text-decoration: none; color: #333; font-weight: 500;
+        transition: 0.3s; padding-bottom: 3px;
+    }
+
+    /* Active page underline */
+    .active-link { color: #e63946; border-bottom: 2px solid #e63946; }
+
+    .nav-menu li a:hover { color: #e63946; }
+
+    .search-container { position: relative; width: 300px; }
+    .search-input {
+        width: 100%; padding: 10px 40px 10px 15px;
+        border: 1px solid #ddd; border-radius: 4px; outline: none;
+    }
+
+    .search-btn {
+        position: absolute; right: 5px; top: 50%;
+        transform: translateY(-50%);
+        background: none; border: none; cursor: pointer; color: #555;
+    }
+
+    .nav-icons { display: flex; gap: 20px; }
+    .nav-icons a { text-decoration: none; color: #333; text-align: center; font-size: 14px; transition: 0.3s; }
+    .nav-icons a:hover { color: #e63946; }
+    .icon-container { position: relative; }
+    .icon-container i { font-size: 20px; }
+
+    .badge {
+        position: absolute; top: -8px; right: -8px;
+        background-color: #e63946; color: white;
+        border-radius: 50%; width: 18px; height: 18px;
+        font-size: 11px; display: flex; justify-content: center; align-items: center;
+    }
+
+    .hamburger { display: none; flex-direction: column; cursor: pointer; }
+    .hamburger span {
+        width: 25px; height: 3px; background: #333;
+        margin: 4px 0; transition: 0.3s;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .nav-menu {
+            position: fixed; left: -100%; top: 70px;
+            flex-direction: column; width: 100%; background: #fff;
+            text-align: center; padding: 20px 0;
+            box-shadow: 0 10px 27px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+        .nav-menu.active { left: 0; }
+        .hamburger { display: flex; }
+
+        .search-container { display: none; }
+    }
+
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+</style>
+
+
+<script>
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+
+    hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("active");
+        navMenu.classList.toggle("active");
+    });
+
+    document.querySelectorAll(".nav-menu li a").forEach(link => {
+        link.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+        });
+    });
+</script>

@@ -24,7 +24,7 @@ def LoginPage(request):
 
             login(request,user)
 
-            return redirect('/profile/')
+            return redirect('/login/login/')
         
         else:
 
