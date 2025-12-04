@@ -124,12 +124,12 @@
 
     <!-- =================== NEW NAVBAR =================== -->
     <nav class="navbar">
-        <a href="/login/login/" class="logo"><i class="fas fa-tshirt"></i> MENSWEAR</a>
+        <a href="/home/home/" class="logo"><i class="fas fa-tshirt"></i> MENSWEAR</a>
 
         <ul class="nav-menu">
-            <li><a href="/login/login/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a></li>
-            <li><a href="/Products/" class="{% if '/products' in request.path %}active-link{% endif %}">Products</a></li>
-            <li><a href="/about/" class="{% if request.path == '/about/' %}active-link{% endif %}">About</a></li>
+            <li><a href="/home/home/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a></li>
+            <li><a href="/home/Products/" class="{% if '/products' in request.path %}active-link{% endif %}">Products</a></li>
+            <li><a href="/home/about/" class="{% if request.path == '/about/' %}active-link{% endif %}">About</a></li>
             <!-- <li><a href="/brands/" class="{% if request.path == '/brands/' %}active-link{% endif %}">Brands</a></li> -->
         </ul>
 
@@ -139,9 +139,9 @@
         </div>
 
         <div class="nav-icons">
-            <a href="/login/profile/"><div class="icon-container"><i class="fas fa-user"></i></div><span>Profile</span></a>
+            <a href="/home/profile/"><div class="icon-container"><i class="fas fa-user"></i></div><span>Profile</span></a>
             <!-- <a href="/wishlist/"><div class="icon-container"><i class="fas fa-heart"></i></div><span>Wishlist</span></a> -->
-            <a href="/cart/"><div class="icon-container"><i class="fas fa-shopping-bag"></i><span class="badge">2</span></div><span>Bag</span></a>
+            <a href="/home/cart/"><div class="icon-container"><i class="fas fa-shopping-bag"></i><span class="badge">2</span></div><span>Bag</span></a>
         </div>
 
         <div class="hamburger">
@@ -159,7 +159,7 @@
         <div class="hero-content">
             <h1>Discover Your Style</h1>
             <p>Exclusive men's fashion. Perfect for the 2025 generation.</p>
-            <a href="/Products/" class="btn btn-light px-4 py-2 fw-bold">Shop Now</a>
+            <a href="/home/Products/" class="btn btn-light px-4 py-2 fw-bold">Shop Now</a>
         </div>
     </section>
 
@@ -217,7 +217,7 @@
     <div class="container my-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3>Featured Products</h3>
-            <a href="/Products/" class="btn btn-outline-dark btn-sm">View All</a>
+            <a href="/home/Products/" class="btn btn-outline-dark btn-sm">View All</a>
         </div>
 
         <div class="row g-4">

@@ -24,7 +24,7 @@ def LoginPage(request):
 
             login(request,user)
 
-            return redirect('/login/login/')
+            return redirect('/home/home/')
         
         else:
 
@@ -40,7 +40,7 @@ def LogoutPage(request):
 
     logout(request)
 
-    return redirect('/login/login/')
+    return redirect('/home/home/')
 
 
 def SignupPage(request):
@@ -63,6 +63,6 @@ def SignupPage(request):
         user.last_name = last_name
         user.save()
 
-        return redirect('/login/login/')
+        return redirect('/')
 
     return render(request, 'signup.html')

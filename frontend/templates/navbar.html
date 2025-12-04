@@ -1,12 +1,12 @@
 {% load static %}
 
 <nav class="navbar">
-    <a href="/" class="logo"><i class="fas fa-tshirt"></i> MENSWEAR</a>
+    <a href="/home/home/" class="logo"><i class="fas fa-tshirt"></i> MENSWEAR</a>
 
     <ul class="nav-menu">
-        <li><a href="/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a></li>
-        <li><a href="/Products/" class="{% if '/products' in request.path %}active-link{% endif %}">Products</a></li>
-        <li><a href="/about/" class="{% if request.path == '/about/' %}active-link{% endif %}">About</a></li>
+        <li><a href="/home/home/" class="{% if request.path == '/' %}active-link{% endif %}">Home</a></li>
+        <li><a href="/home/Products/" class="{% if '/products' in request.path %}active-link{% endif %}">Products</a></li>
+        <li><a href="/home/about/" class="{% if request.path == '/about/' %}active-link{% endif %}">About</a></li>
         <!-- <li><a href="/sale/" class="{% if request.path == '/sale/' %}active-link{% endif %}">Sale</a></li> -->
         <!-- <li><a href="/brands/" class="{% if request.path == '/brands/' %}active-link{% endif %}">Brands</a></li> -->
     </ul>
@@ -17,7 +17,7 @@
     </div>
 
     <div class="nav-icons">
-        <a href="/login/signup/">
+        <a href="/home/profile/">
             <div class="icon-container">
                 <i class="fas fa-user"></i>
             </div>
@@ -31,7 +31,7 @@
             <span>Wishlist</span>
         </a> -->
 
-        <a href="/cart/">
+        <a href="/home/cart/">
             <div class="icon-container">
                 <i class="fas fa-shopping-bag"></i>
                 <span class="badge">2</span>
